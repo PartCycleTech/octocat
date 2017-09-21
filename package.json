@@ -1,0 +1,27 @@
+{
+  "name": "octocat",
+  "version": "0.0.1",
+  "description": "PR bot using api.ai",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PartCycleTech/octocat.git"
+  },
+  "keywords": [
+    "github",
+    "slack",
+    "bot",
+    "api.ai",
+    "pull",
+    "requests"
+  ],
+  "author": "@tlindsay and @tyleryasaka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PartCycleTech/octocat/issues"
+  },
+  "homepage": "https://github.com/PartCycleTech/octocat#readme"
+}

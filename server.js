@@ -4,6 +4,7 @@ var Github = require('github-api');
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongodb = require('mongodb');
+var pluralize = require('pluralize');
 
 const port = process.env.PORT || 8080;
 const user = process.env.DB_USER;
@@ -58,15 +59,26 @@ function listPrs(req, res, filterPrs = () => { return true; }) {
     });
 
     res.send({
-      speech: `Found ${attachments.length} pull-requests!`,
-      displayText: `Found ${attachments.length} pull-requests!`,
+      speech: `Found ${attachments.length} open pull-${pluralize('request', attachments.length)}`,
+      displayText: `Found ${attachments.length} open pull-${pluralize('request', attachments.length)}`,
       data: {
         slack: {
-          text: `I found ${attachments.length} open pull-requests!`,
+          text: `I found ${attachments.length} open pull-${pluralize('request', attachments.length)}!`,
           attachments
         }
       }
     });
+  }).catch((error) => {
+    console.log(error);
+    res.send({
+      speech: 'Whoops! I broke. Contact @tlindsay or @tyleryasaka',
+      displayText: 'Whoops! I broke. Contact @tlindsay or @tyleryasaka',
+      data: {
+        slack: {
+          text: 'Whoops! I broke. Contact @tlindsay or @tyleryasaka'
+        }
+      }
+    })
   });
 }
 

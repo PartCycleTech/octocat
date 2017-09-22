@@ -19,6 +19,7 @@ mongodb.MongoClient.connect(uri, function(err, db) {
   if(err) throw err;
 
   app.post('/octocat', function (req, res) {
+    console.log('got a request', req);
     let action = req.body.result.action;
     if (action === 'list-prs') {
       if (req.body.result.parameters.my && req.body.originalRequest) {

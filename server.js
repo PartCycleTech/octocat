@@ -4,7 +4,7 @@ var Github = require('github-api');
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongodb = require('mongodb');
-var pluarlize = require('pluralize');
+var pluralize = require('pluralize');
 
 const port = process.env.PORT || 8080;
 const user = process.env.DB_USER;

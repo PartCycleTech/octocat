@@ -15,6 +15,7 @@ const gh = new Github({ token: process.env.CLUTCHBOT_TOKEN });
 var app = express();
 app.use(bodyParser.json());
 
+console.log('connecting to mongodb', uri);
 mongodb.MongoClient.connect(uri, function(err, db) {
   if(err) throw err;
 

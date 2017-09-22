@@ -4,6 +4,7 @@ var Github = require('github-api');
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongodb = require('mongodb');
+var pluarlize = require('pluralize');
 
 const port = process.env.PORT || 8080;
 const user = process.env.DB_USER;
@@ -56,11 +57,11 @@ function listPrs(req, res, filterPrs = () => { return true; }) {
     });
 
     res.send({
-      speech: `Found ${attachments.length} pull-requests!`,
-      displayText: `Found ${attachments.length} pull-requests!`,
+      speech: `Found ${attachments.length} open pull-${pluralize('request', attachments.length)}`,
+      displayText: `Found ${attachments.length} open pull-${pluralize('request', attachments.length)}`,
       data: {
         slack: {
-          text: `I found ${attachments.length} open pull-requests!`,
+          text: `I found ${attachments.length} open pull-${pluralize('request', attachments.length)}!`,
           attachments
         }
       }

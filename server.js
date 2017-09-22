@@ -24,9 +24,11 @@ mongodb.MongoClient.connect(uri, function(err, db) {
       if (req.body.result.parameters.my && req.body.originalRequest) {
         let slackUser = req.body.originalRequest.data.event.user;
         return getGithubUsername(db, slackUser).then((githubUsername) => {
-          return listPrs(req, res, (pr) => {
-            //
-          });
+          let filterFn = (pr) => {
+            let reviewers = pr.requested_reviewers.map(reviewer => reviewer.login);
+            return reviewers.includes(githubUsername);
+          };
+          return listPrs(req, res, filterFn);
         });
       } else {
         return listPrs(req, res);
@@ -40,11 +42,11 @@ app.listen(port, function () {
   console.log(`Listening on port ${port}.`);
 });
 
-function listPrs(req, res, filterPrs) {
+function listPrs(req, res, filterPrs = () => { return true; }) {
   let repoName = req.body.result.parameters.repo;
   let repo = gh.getRepo('PartCycleTech', repoName);
   let PRs = repo.listPullRequests().then((prs) => {
-    let attachments = prs.data.map((pr) => {
+    let attachments = prs.data.filter(filterPrs).map((pr) => {
       return {
         title: `#${pr.number} - ${pr.title}`,
         title_link: pr.html_url,
@@ -54,11 +56,11 @@ function listPrs(req, res, filterPrs) {
     });
 
     res.send({
-      speech: `Found ${prs.data.length} pull-requests!`,
-      displayText: `Found ${prs.data.length} pull-requests!`,
+      speech: `Found ${attachments.length} pull-requests!`,
+      displayText: `Found ${attachments.length} pull-requests!`,
       data: {
         slack: {
-          text: `I found ${prs.data.length} open pull-requests!`,
+          text: `I found ${attachments.length} open pull-requests!`,
           attachments
         }
       }

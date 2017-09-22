@@ -66,6 +66,17 @@ function listPrs(req, res, filterPrs = () => { return true; }) {
         }
       }
     });
+  }).catch((error) => {
+    console.log(error);
+    res.send({
+      speech: 'Whoops! I broke. Contact @tlindsay or @tyleryasaka',
+      displayText: 'Whoops! I broke. Contact @tlindsay or @tyleryasaka',
+      data: {
+        slack: {
+          text: 'Whoops! I broke. Contact @tlindsay or @tyleryasaka'
+        }
+      }
+    })
   });
 }
 

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "PR bot using api.ai",
   "engines": {
-    "node": "8.5.0"
+    "node": "7.5.0"
   },
   "main": "server.js",
   "scripts": {

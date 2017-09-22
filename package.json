@@ -34,6 +34,7 @@
     "express": "^4.15.4",
     "github-api": "^3.0.0",
     "mongodb": "^2.2.31",
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.12.1",
+    "pluralize": "^7.0.0"
   }
 }
